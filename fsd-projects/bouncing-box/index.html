@@ -9,6 +9,10 @@
         width: 70px;
         height: 70px;
         background-color: teal;
+        background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSn78kfwRwSskVPsTy2g16xCVRR-uW2VNZxCw&s');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
         font-size: 300%;
         text-align: center;
         user-select: none;
@@ -17,6 +21,7 @@
         top: 100px;
         /* Change me! */
         left: 0px;
+        color: white;
       }
 
       .board {
@@ -42,6 +47,10 @@
         var box = jQuery(".box"); // reference to the HTML .box element
         var board = jQuery(".board"); // reference to the HTML .board element
         var boardWidth = board.width(); // the maximum X-Coordinate of the screen
+        var positionY = 100;
+        var speedY = 5;
+        var randomX = Math.random() * (boardWidth - 70);
+        
 
         // update the boardWidth variable when the window is resized
         jQuery(window).on("resize", function () {
@@ -69,7 +78,9 @@
         //////////////////////////////////////////////////////////////////
 
         // TODO 2 - Variable declarations
-
+        var positionX = 0;
+        var points = 0;
+        var speed = 10;
 
 
 
@@ -80,11 +91,22 @@
          * If the box drifts off the screen, turn it around!
          */
         function update() {
+           moveBoxTo(positionX); // Moves box to right edge
+          positionX += speed;
+          if (positionX <= 0) {
+            speed *= -1;
+          }
+          if (positionX >= boardWidth) {
+          speed *= -1;
+          }
+        }
+
+          
 
         
 
           
-        }
+        
 
         /**
          * This Function will be called each time the box is clicked.
@@ -94,6 +116,13 @@
          * - move the box to the left side of the screen.
          */
         function handleBoxClick() {
+          positionX = positionX + speed;
+          changeBoxText(points)
+          points++;
+          speed += 3;
+          positionX = Math.random() * (boardWidth - 70);
+           var direction = speed > 0 ? 1 : -1;
+           speed = direction * (3 * points + 10);
 
 
 
